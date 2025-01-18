@@ -1,3 +1,10 @@
+<?php 
+
+$page_name = basename($_SERVER['PHP_SELF']);
+echo $page_name;
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -37,7 +44,7 @@
         <div class="row align-items-center">
 
           <div class="col-6 col-xl-6 logo">
-            <h1 class="mb-0"><a href="index.html" class="text-black h2 mb-0">Hikers</a></h1>
+            <h1 class="mb-0"><a href="index.php" class="text-black h2 mb-0">Hikers</a></h1>
           </div>
           
           <div class="col-6 mr-auto py-3 text-right" style="position: relative; top: 3px;">
@@ -53,10 +60,9 @@
             <nav class="site-navigation text-center " role="navigation">
 
               <ul class="site-menu js-clone-nav mx-auto d-none d-lg-block mb-0">
-                <li class="active"><a href="index.html">Homepage</a></li>
-                <li><a href="category.html">Lifestyle</a></li>
-                <li class="has-children">
-                  <a href="category.html">Inspiration</a>
+                <li class="<?php echo $page_name == "index" ? "active" : ''?>"><a href="index.php">Home</a></li>
+                <li class="has-children <?php if($page_name == "index.php" ? "categories" : '');?>">
+                  <a href="category.html">Categories</a>
                   <ul class="dropdown">
                     <li><a href="category.html">Architect</a></li>
                     <li><a href="category.html">Minimal</a></li>
@@ -64,8 +70,8 @@
                     <li><a href="category.html">Furniture</a></li>
                   </ul>
                 </li>
-                <li><a href="category.html">Technology</a></li>
-                <li><a href="category.html">Latest</a></li>
+                <li class="<?php echo $page_name == "blog.php" ? "active" : ''?>"><a href="blog.php">Blog</a></li>
+                <li><a href="category.html">Contact</a></li>
               </ul>
             </nav>
           </div>
