@@ -71,7 +71,7 @@ echo $page_name;
                   </ul>
                 </li>
                 <li class="<?php echo $page_name == "blog.php" ? "active" : ''?>"><a href="blog.php">Blog</a></li>
-                <li><a href="category.html">Contact</a></li>
+                <li><a href="category.html">login.php</a></li>
               </ul>
             </nav>
           </div>
