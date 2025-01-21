@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
         $user_data = [$result['user_id'], $result['name'], $result['role']];
         $_SESSION['user_data'] = $user_data;
 
-        header("location:admin.php");
+        header("location: dashboard/index.php");
 
     } else {
         $_SESSION['error'] = "Wrong Credential";
