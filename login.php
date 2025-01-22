@@ -4,6 +4,10 @@ session_start();
 include 'config.php';
 include 'header.php';
 
+if (isset($_SESSION['user_data'])) {
+  header('location: dashboard/index.php');
+}
+
 ?>
 
 <section class="d-flex justify-content-center align-items-center bg-light">
