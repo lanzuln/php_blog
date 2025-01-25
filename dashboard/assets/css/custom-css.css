@@ -1,0 +1,14 @@
+.app-main{
+    padding: 100px 0px;
+}
+.section_heading{
+    margin-bottom: 60px;
+}
+.app-main table {
+    border: 1px solid #acacac;
+    border-radius: 38px;
+}
+.app-main table th,
+.app-main table td{
+    padding: 15px 10px;
+}

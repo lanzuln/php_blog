@@ -13,10 +13,10 @@ include 'header.php'; ?>
           <div class="section_heading">
             <div class="row">
               <div class="col-sm-6">
-                <h2>All Blog</h2>
+                <h2>All Category</h2>
               </div>
-              <div class="col-sm-6">
-              
+              <div class="col-sm-6 text-end">
+                <a href="Category_create.php" class="btn btn-primary btn-lg">Add New</a>
               </div>
             </div>
           </div>

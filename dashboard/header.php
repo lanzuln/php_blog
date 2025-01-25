@@ -36,6 +36,7 @@ if (!isset($_SESSION['user_data'])) {
   <!--end::Third Party Plugin(Bootstrap Icons)-->
   <!--begin::Required Plugin(AdminLTE)-->
   <link rel="stylesheet" href="assets/css/adminlte.css" />
+  <link rel="stylesheet" href="assets/css/custom-css.css" />
   <!--end::Required Plugin(AdminLTE)-->
   <!-- apexcharts -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
@@ -105,9 +106,16 @@ if (!isset($_SESSION['user_data'])) {
           <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
 
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="index.php" class="nav-link">
                 <i class="nav-icon bi bi-circle text-info"></i>
                 <p>Blog</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="category_all.php" class="nav-link">
+                <i class="nav-icon bi bi-circle text-info"></i>
+                <p>Category</p>
               </a>
             </li>
           </ul>
