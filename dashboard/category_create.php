@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include 'header.php'; ?>
 
 <main class="app-main">
@@ -13,6 +14,16 @@ include 'header.php'; ?>
           <div class="section_heading">
             <div class="row">
               <div class="col-sm-6">
+
+                <?php
+                if (isset($_SESSION['message'])): ?>
+                  <div class="alert alert-danger" role="alert">
+                    <?php echo $_SESSION['message']; ?>
+                  </div>
+                  <?php
+                  unset($_SESSION['message']);
+                endif;
+                ?>
                 <h2>Add Category</h2>
               </div>
               <div class="col-sm-6">
@@ -36,24 +47,27 @@ include 'header.php'; ?>
                 <?php
                 if (isset($_POST['submit'])) {
                   $category_name = mysqli_real_escape_string($config, $_POST['cat_name']);
-                  // $sql = "INSERT INTO category (cat_name) value ('$category_name')";
                   $duplicate_category_sql = "SELECT * FROM categories WHERE cat_name = '$category_name'";
                   $duplicate_category_query = mysqli_query($config, $duplicate_category_sql);
-                  $unique_raw = mysqli_num_rows($duplicate_category_query);
-                  if ($unique_raw > 0) {
-                    echo "Category Already Exists";
+                  $raw = mysqli_num_rows($duplicate_category_query);
+                  if ($raw > 0) {
+                    $msg = "Category Already Exists";
+                    $_SESSION['message'] = $msg;
                   } else {
                     $sql = "INSERT INTO categories (cat_name) value ('$category_name')";
                     $result = mysqli_query($config, $sql);
                     if ($result) {
-                      echo "Category Added Successfully";
+                      $msg = "Category Added Successfully";
+                      $_SESSION['message'] = $msg;
                     } else {
-                      echo "Category Added Failed";
+                      $msg = "Category Added Failed";
+                      $_SESSION['message'] = $msg;
                     }
                   }
-                }
-                else{
-                  echo "Category Name is Required";
+                } else {
+                  $msg = "Category Name is Required";
+                  $_SESSION['message'] = $msg;
+                  header("location:category_create.php");
                 }
                 ?>
               </div>
