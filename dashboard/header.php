@@ -3,7 +3,7 @@ include "../config.php";
 session_start();
 
 if (!isset($_SESSION['user_data'])) {
-  header('location: http://php-blog.test/login.php');
+  header('location: ../login.php');
 }
 ?>
 <!doctype html>

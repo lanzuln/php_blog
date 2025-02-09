@@ -16,7 +16,7 @@ include 'header.php'; ?>
                 <h2>All Category</h2>
               </div>
               <div class="col-sm-6 text-end">
-                <a href="Category_create.php" class="btn btn-primary btn-lg">Add New</a>
+                <a href="category_create.php" class="btn btn-primary btn-lg">Add New</a>
               </div>
             </div>
           </div>
