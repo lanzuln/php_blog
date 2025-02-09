@@ -16,7 +16,7 @@ if (isset($_SESSION['user_data'])) {
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card shadow p-4">
                     <h3 class="text-center mb-4">Login</h3>
-                    <form method="post">
+                    <form method="POST">
                         <!-- Email Input -->
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
@@ -43,11 +43,6 @@ if (isset($_SESSION['user_data'])) {
                                 ?>
                             </div>
                         <?php endif; ?>
-
-                        <!-- Forgot Password Link -->
-                        <!-- <div class="text-center mt-3">
-                            <a href="#" class="text-decoration-none">Forgot password?</a>
-                        </div> -->
                     </form>
                 </div>
             </div>

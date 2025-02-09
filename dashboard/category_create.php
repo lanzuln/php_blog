@@ -1,5 +1,6 @@
 <?php
 ob_start();
+
 include 'header.php'; ?>
 
 <main class="app-main">
@@ -16,9 +17,12 @@ include 'header.php'; ?>
               <div class="col-sm-6">
 
                 <?php
-                if (isset($_SESSION['message'])): ?>
-                  <div class="alert alert-danger" role="alert">
-                    <?php echo $_SESSION['message']; ?>
+                if (isset($_SESSION['message'])):
+                $message = $_SESSION['message'][0];
+                $alert_color = $_SESSION['message'][1]
+                ?>
+                  <div class="alert alert-<?php echo $alert_color; ?>" role="alert">
+                    <?php echo $message; ?>
                   </div>
                   <?php
                   unset($_SESSION['message']);
@@ -37,39 +41,15 @@ include 'header.php'; ?>
           <div class="col-md-6">
             <div class="card">
               <div class="card-body">
-                <form action="" method="post">
+                <form method="POST">
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Enter Category Name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="cat_name">
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="cat_name" Required>
                   </div>
-                  <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" name="add_cat" class="btn btn-primary">Submit</button>
+                  <a class="btn btn-danger" href="category_all.php">Back</a>
                 </form>
-                <?php
-                if (isset($_POST['submit'])) {
-                  $category_name = mysqli_real_escape_string($config, $_POST['cat_name']);
-                  $duplicate_category_sql = "SELECT * FROM categories WHERE cat_name = '$category_name'";
-                  $duplicate_category_query = mysqli_query($config, $duplicate_category_sql);
-                  $raw = mysqli_num_rows($duplicate_category_query);
-                  if ($raw > 0) {
-                    $msg = "Category Already Exists";
-                    $_SESSION['message'] = $msg;
-                  } else {
-                    $sql = "INSERT INTO categories (cat_name) value ('$category_name')";
-                    $result = mysqli_query($config, $sql);
-                    if ($result) {
-                      $msg = "Category Added Successfully";
-                      $_SESSION['message'] = $msg;
-                    } else {
-                      $msg = "Category Added Failed";
-                      $_SESSION['message'] = $msg;
-                    }
-                  }
-                } else {
-                  $msg = "Category Name is Required";
-                  $_SESSION['message'] = $msg;
-                  header("location:category_create.php");
-                }
-                ?>
+             
               </div>
             </div>
           </div>
@@ -81,4 +61,30 @@ include 'header.php'; ?>
   </div>
   <!--end::App Content-->
 </main>
-<?php include 'footer.php';
+<?php include 'footer.php'; ?>
+
+<?php
+if (isset($_POST['cat_name'])) {
+  $category_name = mysqli_real_escape_string($config, $_POST['cat_name']);
+  $duplicate_category_sql = "SELECT * FROM categories WHERE cat_name = '$category_name'";
+  $duplicate_category_query = mysqli_query($config, $duplicate_category_sql);
+  $raw = mysqli_num_rows($duplicate_category_query);
+  if ($raw > 0) {
+    $msg = ['Category Already Exists', 'danger'];
+    $_SESSION['message'] = $msg;
+    header("location: category_create.php");
+  } else {
+    $sql = "INSERT INTO categories (cat_name) value ('$category_name')";
+    $result = mysqli_query($config, $sql);
+    if ($result) {
+      $msg =[ "Category Added Successfully", "success"];
+      $_SESSION['message'] = $msg;
+      header("location: category_create.php");
+    } else {
+      $msg = ['Category Not Added', 'danger'];
+      $_SESSION['message'] = $msg;
+      header("location: category_create.php");
+    }
+  }
+} 
+?>
