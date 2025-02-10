@@ -24,18 +24,37 @@ include 'header.php'; ?>
             <thead>
               <tr>
                 <th scope="col">SL</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">Category Id</th>
+                <th scope="col">Category Name</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
+              <?php
+              $sql = 'SELECT * FROM categories';
+              $result = mysqli_query($config, $sql);
+              $row = mysqli_num_rows($result);
+              $all_category = mysqli_fetch_assoc($result);
+              if ($row > 0) {
+                $key = 1; 
+            
+                while ($item = mysqli_fetch_assoc($result)) {
+                    ?>
+                    <tr>
+                        <th scope="row"><?php echo $key++; ?></th>
+                        <td><?php echo $item['cat_id']; ?></td>
+                        <td><?php echo $item['cat_name']; ?></td>
+                        <td>
+                            <a href="" class="btn btn-primary">Edit</a>
+                            <a href="" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            } else {
+                echo "<tr><td colspan='4'>No Data Found</td></tr>";
+            }
+            ?>
             </tbody>
           </table>
         </div>
