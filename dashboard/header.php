@@ -1,5 +1,6 @@
 <?php
 include "../config.php";
+ob_start();
 session_start();
 
 if (!isset($_SESSION['user_data'])) {
@@ -56,7 +57,18 @@ if (!isset($_SESSION['user_data'])) {
       <!--begin::Container-->
       <div class="container-fluid">
         <!--begin::Start Navbar Links-->
-
+        <?php
+        if (isset($_SESSION['message'])):
+          $message = $_SESSION['message'][0];
+          $alert_color = $_SESSION['message'][1]
+            ?>
+          <div class="alert alert-<?php echo $alert_color; ?>" role="alert">
+            <?php echo $message; ?>
+          </div>
+          <?php
+          unset($_SESSION['message']);
+        endif;
+        ?>
         <!--end::Start Navbar Links-->
         <!--begin::End Navbar Links-->
         <ul class="navbar-nav ms-auto">
@@ -70,7 +82,7 @@ if (!isset($_SESSION['user_data'])) {
             <?php endif; ?>
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
               <!--begin::User Image-->
-           
+
               <li class="user-footer">
                 <a href="#" class="btn btn-default btn-flat">Profile</a>
                 <a href="logout.php" class="btn btn-default btn-flat float-end">Log out</a>

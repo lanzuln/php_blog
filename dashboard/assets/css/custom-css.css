@@ -12,3 +12,9 @@
 .app-main table td{
     padding: 15px 10px;
 }
+
+td.action_td {
+    display: flex ;
+    flex-direction: row;
+    gap: 10px;
+}

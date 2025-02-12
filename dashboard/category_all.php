@@ -44,9 +44,14 @@ include 'header.php'; ?>
                         <th scope="row"><?php echo $key++; ?></th>
                         <td><?php echo $item['cat_id']; ?></td>
                         <td><?php echo $item['cat_name']; ?></td>
-                        <td>
-                            <a href="" class="btn btn-primary">Edit</a>
-                            <a href="" class="btn btn-danger">Delete</a>
+                        <td class="action_td">
+                            <span><a href="" class="btn btn-primary">Edit</a></span>
+                            <span>
+                            <form action="" method="POST" onsubmit="return confirm('Are you sure to Delete it?')">
+                                <input type="hidden" name="delete_cat_id" value="<?php echo $item['cat_id']; ?>">
+                                <button type="submit" name="delete_cat" class="btn btn-danger">Delete</button>
+                            </form>
+                            </span>
                         </td>
                     </tr>
                     <?php
@@ -66,3 +71,19 @@ include 'header.php'; ?>
   <!--end::App Content-->
 </main>
 <?php include 'footer.php';
+
+// if (isset($_POST['delete_cat'])) {
+//     $cat_id = $_POST['delete_cat_id'];
+//     $sql = "DELETE FROM categories WHERE cat_id = '$cat_id'";
+//     $result = mysqli_query($config, $sql);
+//     if ($result) {
+//         $msg = ['Category Deleted Successfully', 'success'];
+//         $_SESSION['message'] = $msg;
+//         header("location: category_all.php");
+//     } else {
+//         $msg = ['Category Not Deleted', 'danger'];
+//         $_SESSION['message'] = $msg;
+//         header("location: category_all.php");
+//     }
+// }
+

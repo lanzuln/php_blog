@@ -16,18 +16,7 @@ include 'header.php'; ?>
             <div class="row">
               <div class="col-sm-6">
 
-                <?php
-                if (isset($_SESSION['message'])):
-                $message = $_SESSION['message'][0];
-                $alert_color = $_SESSION['message'][1]
-                ?>
-                  <div class="alert alert-<?php echo $alert_color; ?>" role="alert">
-                    <?php echo $message; ?>
-                  </div>
-                  <?php
-                  unset($_SESSION['message']);
-                endif;
-                ?>
+               
                 <h2>Add Category</h2>
               </div>
               <div class="col-sm-6">
@@ -68,8 +57,8 @@ if (isset($_POST['cat_name'])) {
   $category_name = mysqli_real_escape_string($config, $_POST['cat_name']);
   $duplicate_category_sql = "SELECT * FROM categories WHERE cat_name = '$category_name'";
   $duplicate_category_query = mysqli_query($config, $duplicate_category_sql);
-  $raw = mysqli_num_rows($duplicate_category_query);
-  if ($raw > 0) {
+  $row = mysqli_num_rows($duplicate_category_query);
+  if ($row > 0) {
     $msg = ['Category Already Exists', 'danger'];
     $_SESSION['message'] = $msg;
     header("location: category_create.php");

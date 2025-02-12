@@ -1,7 +1,7 @@
 <?php
 
 $page_name = basename($_SERVER['PHP_SELF']);
-echo $page_name;
+
 
 ?>
   <!DOCTYPE html>
