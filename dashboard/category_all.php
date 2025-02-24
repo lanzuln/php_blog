@@ -45,7 +45,7 @@ include 'header.php'; ?>
                         <td><?php echo $item['cat_id']; ?></td>
                         <td><?php echo $item['cat_name']; ?></td>
                         <td class="action_td">
-                            <span><a href="" class="btn btn-primary">Edit</a></span>
+                            <span><a href="category_edit.php?id=<?php echo $item['cat_id']; ?>" class="btn btn-primary">Edit</a></span>
                             <span>
                             <form action="" method="POST" onsubmit="return confirm('Are you sure to Delete it?')">
                                 <input type="hidden" name="delete_cat_id" value="<?php echo $item['cat_id']; ?>">
@@ -72,18 +72,18 @@ include 'header.php'; ?>
 </main>
 <?php include 'footer.php';
 
-// if (isset($_POST['delete_cat'])) {
-//     $cat_id = $_POST['delete_cat_id'];
-//     $sql = "DELETE FROM categories WHERE cat_id = '$cat_id'";
-//     $result = mysqli_query($config, $sql);
-//     if ($result) {
-//         $msg = ['Category Deleted Successfully', 'success'];
-//         $_SESSION['message'] = $msg;
-//         header("location: category_all.php");
-//     } else {
-//         $msg = ['Category Not Deleted', 'danger'];
-//         $_SESSION['message'] = $msg;
-//         header("location: category_all.php");
-//     }
-// }
+if (isset($_POST['delete_cat'])) {
+    $cat_id = $_POST['delete_cat_id'];
+    $sql = "DELETE FROM categories WHERE cat_id = '$cat_id'";
+    $result = mysqli_query($config, $sql);
+    if ($result) {
+        $msg = ['Category Deleted Successfully', 'success'];
+        $_SESSION['message'] = $msg;
+        header("location: category_all.php");
+    } else {
+        $msg = ['Category Not Deleted', 'danger'];
+        $_SESSION['message'] = $msg;
+        header("location: category_all.php");
+    }
+}
 
