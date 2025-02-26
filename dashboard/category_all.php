@@ -34,6 +34,7 @@ include 'header.php'; ?>
               $sql = 'SELECT * FROM categories';
               $result = mysqli_query($config, $sql);
               $row = mysqli_num_rows($result);
+              var_dump($row);
               $all_category = mysqli_fetch_assoc($result);
               if ($row > 0) {
                 $key = 1; 
