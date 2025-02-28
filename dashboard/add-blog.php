@@ -1,7 +1,19 @@
 <?php
-ob_start();
 
-include 'header.php'; ?>
+
+include 'header.php';
+
+if (isset($_SESSION['user_data'])) {
+  $auth_id = $_SESSION['user_data']['0'];
+
+
+}
+
+$sql = 'SELECT * FROM categories';
+$query = mysqli_query($config, $sql);
+?>
+
+
 
 <main class="app-main">
 
@@ -16,7 +28,7 @@ include 'header.php'; ?>
             <div class="row">
               <div class="col-sm-6">
 
-               
+
                 <h2>Add Blog</h2>
               </div>
               <div class="col-sm-6">
@@ -30,20 +42,37 @@ include 'header.php'; ?>
           <div class="col-md-7">
             <div class="card">
               <div class="card-body">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
+                  <?php echo $auth_id; ?>
                   <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Blog Title</label>  
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="blog Title" Required>
+                    <label class="form-label">Select Category</label>
+                    <select name="cat_name" id="" class="form-control">
+                      <?php while ($item = mysqli_fetch_assoc($query)): ?>
+                        <option value="<?php echo $item['cat_id'] ?>"><?php echo $item['cat_name'] ?></option>
+                      <?php endwhile; ?>
+                    </select>
                   </div>
 
                   <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Blog Content</label>  
-                    <textarea class="form-control" name="blog_content" id="textarea"></textarea>
+                    <label for="input_title" class="form-label">Blog Title</label>
+                    <input type="text" class="form-control" id="input_title" name="blog_Title" Required>
                   </div>
+
+                  <div class="mb-3">
+                    <label class="form-label">Blog Content</label>
+                    <textarea Required class="form-control" name="blog_content" id="textarea"></textarea>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="input_file" class="form-label">Blog Image</label>
+                    <input type="file" Required class="form-control" name="blog_image" id="input_file"
+                      aria-describedby="emailHelp">
+                  </div>
+
                   <button type="submit" name="add_cat" class="btn btn-primary">Submit</button>
                   <a class="btn btn-danger" href="category_all.php">Back</a>
                 </form>
-             
+
               </div>
             </div>
           </div>
@@ -71,7 +100,7 @@ if (isset($_POST['cat_name'])) {
     $sql = "INSERT INTO categories (cat_name) value ('$category_name')";
     $result = mysqli_query($config, $sql);
     if ($result) {
-      $msg =[ "Category Added Successfully", "success"];
+      $msg = ["Category Added Successfully", "success"];
       $_SESSION['message'] = $msg;
       header("location: category_create.php");
     } else {
@@ -80,5 +109,5 @@ if (isset($_POST['cat_name'])) {
       header("location: category_create.php");
     }
   }
-} 
+}
 ?>
