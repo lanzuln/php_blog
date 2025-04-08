@@ -78,7 +78,9 @@ if (!isset($_SESSION['user_data'])) {
 
             <?php if (isset($_SESSION['user_data'])): ?>
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <span class="d-none d-md-inline"><?php echo $_SESSION['user_data']['1']; ?></span>
+                <span class="d-none d-md-inline">
+                  <?php echo $_SESSION['user_data']['1']; ?>
+                </span>
               </a>
             <?php endif; ?>
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">

@@ -1,5 +1,5 @@
 <?php
-
+//এটা current file এর নাম বলে দিবে extension সহ।
 $page_name = basename($_SERVER['PHP_SELF']);
 
 
@@ -50,7 +50,7 @@ $page_name = basename($_SERVER['PHP_SELF']);
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="index.php" class="<?php echo $page_name == "index" ? "active" : '' ?>">Home</a></li>
+            <li><a href="index.php" class="<?php echo $page_name == "index.php" ? "active" : '' ?>">Home</a></li>
             <li><a href="blog.php" class="<?php echo $page_name == "blog.php" ? "active" : '' ?>">Blog</a></li>
             <li><a href="login.php" class="<?php echo $page_name == "login.php" ? "active" : '' ?>">Login</a></li>
             <li><a href="contact.php">Contact</a></li>

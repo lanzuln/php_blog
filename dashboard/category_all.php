@@ -34,33 +34,33 @@ include 'header.php'; ?>
               $sql = 'SELECT * FROM categories';
               $result = mysqli_query($config, $sql);
               $row = mysqli_num_rows($result);
-              var_dump($row);
-              $all_category = mysqli_fetch_assoc($result);
+              // var_dump($row);
               if ($row > 0) {
-                $key = 1; 
-            
+                $key = 1;
+
                 while ($item = mysqli_fetch_assoc($result)) {
-                    ?>
-                    <tr>
-                        <th scope="row"><?php echo $key++; ?></th>
-                        <td><?php echo $item['cat_id']; ?></td>
-                        <td><?php echo $item['cat_name']; ?></td>
-                        <td class="action_td">
-                            <span><a href="category_edit.php?id=<?php echo $item['cat_id']; ?>" class="btn btn-primary">Edit</a></span>
-                            <span>
-                            <form action="" method="POST" onsubmit="return confirm('Are you sure to Delete it?')">
-                                <input type="hidden" name="delete_cat_id" value="<?php echo $item['cat_id']; ?>">
-                                <button type="submit" name="delete_cat" class="btn btn-danger">Delete</button>
-                            </form>
-                            </span>
-                        </td>
-                    </tr>
-                    <?php
+                  ?>
+                  <tr>
+                    <th scope="row"><?php echo $key++; ?></th>
+                    <td><?php echo $item['cat_id']; ?></td>
+                    <td><?php echo $item['cat_name']; ?></td>
+                    <td class="action_td">
+                      <span><a href="category_edit.php?id=<?php echo $item['cat_id']; ?>"
+                          class="btn btn-primary">Edit</a></span>
+                      <span>
+                        <form action="" method="POST" onsubmit="return confirm('Are you sure to Delete it?')">
+                          <input type="hidden" name="delete_cat_id" value="<?php echo $item['cat_id']; ?>">
+                          <button type="submit" name="delete_cat" class="btn btn-danger">Delete</button>
+                        </form>
+                      </span>
+                    </td>
+                  </tr>
+                  <?php
                 }
-            } else {
+              } else {
                 echo "<tr><td colspan='4'>No Data Found</td></tr>";
-            }
-            ?>
+              }
+              ?>
             </tbody>
           </table>
         </div>
@@ -74,17 +74,17 @@ include 'header.php'; ?>
 <?php include 'footer.php';
 
 if (isset($_POST['delete_cat'])) {
-    $cat_id = $_POST['delete_cat_id'];
-    $sql = "DELETE FROM categories WHERE cat_id = '$cat_id'";
-    $result = mysqli_query($config, $sql);
-    if ($result) {
-        $msg = ['Category Deleted Successfully', 'success'];
-        $_SESSION['message'] = $msg;
-        header("location: category_all.php");
-    } else {
-        $msg = ['Category Not Deleted', 'danger'];
-        $_SESSION['message'] = $msg;
-        header("location: category_all.php");
-    }
+  $cat_id = $_POST['delete_cat_id'];
+  $sql = "DELETE FROM categories WHERE cat_id = '{$cat_id}'";
+  $result = mysqli_query($config, $sql);
+  if ($result) {
+    $msg = ['Category Deleted Successfully', 'success'];
+    $_SESSION['message'] = $msg;
+    header("location: category_all.php");
+  } else {
+    $msg = ['Category Not Deleted', 'danger'];
+    $_SESSION['message'] = $msg;
+    header("location: category_all.php");
+  }
 }
 

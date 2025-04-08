@@ -55,6 +55,7 @@ include 'header.php'; ?>
 <?php
 if (isset($_POST['cat_name'])) {
   $category_name = mysqli_real_escape_string($config, $_POST['cat_name']);
+  
   $duplicate_category_sql = "SELECT * FROM categories WHERE cat_name = '$category_name'";
   $duplicate_category_query = mysqli_query($config, $duplicate_category_sql);
   $row = mysqli_num_rows($duplicate_category_query);

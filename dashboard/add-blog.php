@@ -5,8 +5,6 @@ include 'header.php';
 
 if (isset($_SESSION['user_data'])) {
   $auth_id = $_SESSION['user_data']['0'];
-
-
 }
 
 $sql = 'SELECT * FROM categories';
@@ -69,8 +67,8 @@ $query = mysqli_query($config, $sql);
                       aria-describedby="emailHelp">
                   </div>
 
-                  <button type="submit" name="add_cat" class="btn btn-primary">Submit</button>
-                  <a class="btn btn-danger" href="category_all.php">Back</a>
+                  <button type="submit" name="add_blog" class="btn btn-primary">Submit</button>
+                  <a class="btn btn-danger" href="index.php">Back</a>
                 </form>
 
               </div>
@@ -87,27 +85,62 @@ $query = mysqli_query($config, $sql);
 <?php include 'footer.php'; ?>
 
 <?php
-if (isset($_POST['cat_name'])) {
-  $category_name = mysqli_real_escape_string($config, $_POST['cat_name']);
-  $duplicate_category_sql = "SELECT * FROM categories WHERE cat_name = '$category_name'";
-  $duplicate_category_query = mysqli_query($config, $duplicate_category_sql);
-  $row = mysqli_num_rows($duplicate_category_query);
-  if ($row > 0) {
-    $msg = ['Category Already Exists', 'danger'];
-    $_SESSION['message'] = $msg;
-    header("location: category_create.php");
-  } else {
-    $sql = "INSERT INTO categories (cat_name) value ('$category_name')";
-    $result = mysqli_query($config, $sql);
-    if ($result) {
-      $msg = ["Category Added Successfully", "success"];
-      $_SESSION['message'] = $msg;
-      header("location: category_create.php");
-    } else {
-      $msg = ['Category Not Added', 'danger'];
-      $_SESSION['message'] = $msg;
-      header("location: category_create.php");
+if (isset($_POST['add_blog'])) {
+  $title = mysqli_real_escape_string($config, $_POST['blog_Title']);
+  $desc = mysqli_real_escape_string($config, $_POST['blog_content']);
+  $blog_cat = mysqli_real_escape_string($config, $_POST['cat_name']);
+
+    /*** 
+    $_FILE এর মাঝে এইসব থাকে 
+
+    array(6) {
+      ["name"]=>
+      string(13) "back part.png"
+      ["full_path"]=>
+      string(13) "back part.png"
+      ["type"]=>
+      string(9) "image/png"
+      ["tmp_name"]=>
+      string(42) "C:\Users\ln\AppData\Local\Temp\php640D.tmp"
+      ["error"]=>
+      int(0)
+      ["size"]=>
+      int(175197)
     }
+  */
+
+  $blog_image = $_FILES['blog_image']['name']; //extension সহ নামটা । ex- flower.png
+  $blog_image_tmp = $_FILES['blog_image']['tmp_name']; // এই file er জন্য একটা temporary path ।
+  $blog_image_ext = strtolower(pathinfo($blog_image, PATHINFO_EXTENSION)); // just image এর extension টা দেয়।
+  $allow_type = ['jpg', 'png', 'jpeg'];
+  $local_path = 'uploads/' . $blog_image;
+  $blog_image_size = $_FILES['blog_image']['size'];
+
+  if (in_array($blog_image_ext, $allow_type)) {
+    if ($blog_image_size < 5000000) {
+      move_uploaded_file($blog_image_tmp, $local_path);
+
+      $sql = "INSERT INTO blogs (blog_title, blog_body, blog_image, category, author_id) 
+      value ('$title', '$desc','$local_path', '$blog_cat', '$auth_id')";
+      $result = mysqli_query($config, $sql);
+      if ($result) {
+        $msg = ["Blog Added Successfully", "success"];
+        $_SESSION['message'] = $msg;
+        header("location: add-blog.php");
+      } else {
+        $msg = ['Blog Not Added', 'danger'];
+        $_SESSION['message'] = $msg;
+        header("location: add-blog.php");
+      }
+    } else {
+      $msg = ['Image Size Should be less than 5MB', 'danger'];
+      $_SESSION['message'] = $msg;
+      header("location: add-blog.php");
+    }
+  } else {
+    $msg = ['Invalid Image Format', 'danger'];
+    $_SESSION['message'] = $msg;
+    header("location: add-blog.php");
   }
 }
 ?>
