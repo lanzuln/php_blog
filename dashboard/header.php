@@ -133,6 +133,14 @@ if (!isset($_SESSION['user_data'])) {
                 <p>Category</p>
               </a>
             </li>
+
+            <li class="nav-item">
+              <a href="user_all.php" class="nav-link">
+                <i class="nav-icon bi bi-circle text-info"></i>
+                <p>User</p>
+              </a>
+            </li>
+
           </ul>
           <!--end::Sidebar Menu-->
         </nav>

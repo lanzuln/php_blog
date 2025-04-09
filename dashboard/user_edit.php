@@ -3,6 +3,19 @@ ob_start();
 
 include 'header.php'; ?>
 
+<?php
+$id = $_GET['id'];
+echo $id;
+
+$sql = "SELECT * FROM categories where cat_id = '$id'";
+
+$query = mysqli_query($config, $sql);
+$row = mysqli_fetch_assoc($query);
+
+$cat_name = $row['cat_name'];
+
+?>
+
 <main class="app-main">
 
   <div class="app-content">
@@ -33,9 +46,9 @@ include 'header.php'; ?>
                 <form method="POST">
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Enter Category Name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="cat_name" Required>
+                    <input type="text" value="<?php echo $cat_name;?>" class="form-control" id="exampleInputEmail1" name="update_cat_name" Required>
                   </div>
-                  <button type="submit" name="add_cat" class="btn btn-primary">Submit</button>
+                  <button type="submit" name="update_cat" class="btn btn-primary">Submit</button>
                   <a class="btn btn-danger" href="category_all.php">Back</a>
                 </form>
              
@@ -53,28 +66,20 @@ include 'header.php'; ?>
 <?php include 'footer.php'; ?>
 
 <?php
-if (isset($_POST['cat_name'])) {
-  $category_name = mysqli_real_escape_string($config, $_POST['cat_name']);
-  
-  $duplicate_category_sql = "SELECT * FROM categories WHERE cat_name = '$category_name'";
-  $duplicate_category_query = mysqli_query($config, $duplicate_category_sql);
-  $row = mysqli_num_rows($duplicate_category_query);
-  if ($row > 0) {
-    $msg = ['Category Already Exists', 'danger'];
+if (isset($_POST['update_cat'])) {
+  $category_name = mysqli_real_escape_string($config, $_POST['update_cat_name']);
+  $Update_sql = "UPDATE categories SET cat_name= '$category_name' WHERE cat_id = '$id'";
+  $Update_query = mysqli_query($config, $Update_sql);
+  if ($Update_query) {
+    $msg = ['Category Update Successfully', 'success'];
     $_SESSION['message'] = $msg;
-    header("location: category_create.php");
+    header("location: category_all.php");
   } else {
-    $sql = "INSERT INTO categories (cat_name) VALUES ('$category_name')";
-    $result = mysqli_query($config, $sql);
-    if ($result) {
-      $msg =[ "Category Added Successfully", "success"];
+
+      $msg = ['Something went wrong', 'danger'];
       $_SESSION['message'] = $msg;
-      header("location: category_create.php");
-    } else {
-      $msg = ['Category Not Added', 'danger'];
-      $_SESSION['message'] = $msg;
-      header("location: category_create.php");
-    }
+      header("location: category_edit.php");
+    
   }
 } 
 ?>
